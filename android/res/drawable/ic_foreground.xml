@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+    <!-- Outer timer circle -->
+    <path
+        android:strokeColor="#FFFF5D73"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:pathData="M 54,19 A 35,35 0 1,1 19,54" />
+    <!-- White tooth icon -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:strokeColor="#FF1B2A6B"
+        android:strokeWidth="2"
+        android:pathData="M32.88,38.6 c0.0,-6.6 6.6,-8.8 12.32,-6.6 5.28,1.76 12.32,1.76 17.6,0.0 5.72,-2.2 12.32,0.0 12.32,6.6 0.0,13.2 -5.72,17.6 -8.8,30.8 -1.32,5.28 -6.6,5.28 -7.48,0.0 -0.88,-4.4 -1.76,-8.8 -4.84,-8.8 s-3.96,4.4 -4.84,8.8 c-0.88,5.28 -6.16,5.28 -7.48,0.0 -3.08,-13.2 -8.8,-17.6 -8.8,-30.8 z" />
+</vector>

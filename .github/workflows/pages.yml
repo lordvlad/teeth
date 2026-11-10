@@ -1,0 +1,60 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: oven-sh/setup-bun@v2
+
+      # Optional secret ANDROID_KEYSTORE_B64 = base64 of the signing keystore (alias "teeth", password "android").
+      # Without it a throwaway key is generated: the APK works, but later builds can't update it in place.
+      - name: Restore signing key
+        env:
+          KS_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+        run: |
+          if [ -n "$KS_B64" ]; then
+            echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/teeth.keystore"
+            echo "TEETH_KEYSTORE=$RUNNER_TEMP/teeth.keystore" >> "$GITHUB_ENV"
+          else
+            echo "::warning::ANDROID_KEYSTORE_B64 is not set; signing the APK with a throwaway key."
+          fi
+
+      - name: Build APK
+        run: bun android/build.ts
+
+      - name: Assemble site
+        run: |
+          mkdir _site
+          cp -r public/. _site/
+          test -f _site/teeth.apk
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

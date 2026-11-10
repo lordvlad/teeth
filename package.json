@@ -1,0 +1,9 @@
+{
+  "name": "teeth",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun src/server.ts",
+    "android": "bun android/build.ts"
+  }
+}
