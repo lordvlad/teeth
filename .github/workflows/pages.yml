@@ -23,6 +23,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Every deploy gets its own service-worker cache.
+      - name: Stamp service worker
+        run: sed -i "s/const BUILD = \"dev\"/const BUILD = \"${GITHUB_SHA::7}\"/" public/sw.js
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -30,31 +34,31 @@ jobs:
 
       - uses: oven-sh/setup-bun@v2
 
-      # Optional secret ANDROID_KEYSTORE_B64 = base64 of the signing keystore (alias "teeth", password "android").
-      # Without it a throwaway key is generated: the APK works, but later builds can't update it in place.
+      # Secret ANDROID_KEYSTORE_B64 = base64 -w0 of the signing keystore (password "android"). Without it a throwaway key
+      # is generated: the APK works, but a later build can't be installed over it.
       - name: Restore signing key
         env:
           KS_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
         run: |
           if [ -n "$KS_B64" ]; then
-            echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/teeth.keystore"
-            echo "TEETH_KEYSTORE=$RUNNER_TEMP/teeth.keystore" >> "$GITHUB_ENV"
+            echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/app.keystore"
+            echo "APP_KEYSTORE=$RUNNER_TEMP/app.keystore" >> "$GITHUB_ENV"
           else
             echo "::warning::ANDROID_KEYSTORE_B64 is not set; signing the APK with a throwaway key."
           fi
 
+      # The run number is the Android versionCode, so each deployed APK installs over the previous one.
       - name: Build APK
+        env:
+          APP_VERSION_CODE: ${{ github.run_number }}
         run: bun android/build.ts
 
-      - name: Assemble site
-        run: |
-          mkdir _site
-          cp -r public/. _site/
-          test -f _site/teeth.apk
+      - run: test -f public/teeth.apk
 
+      # The app is static and uses relative URLs, so public/ is served as-is under /<repo>/.
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: public
       - id: deployment
         uses: actions/deploy-pages@v4

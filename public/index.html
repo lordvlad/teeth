@@ -64,20 +64,16 @@
     #btns { grid-column:2; grid-row:3; margin:0; }
     #opts { grid-column:2; grid-row:4; }
   }
-  #apk-dl { position:fixed; left:max(12px,env(safe-area-inset-left)); bottom:max(12px,env(safe-area-inset-bottom)); z-index:5; display:none;
-            align-items:center; justify-content:center; width:56px; height:56px; padding:10px; border-radius:50%;
-            background:#fff; border:4px solid var(--navy); box-shadow:0 4px 0 var(--navy); cursor:pointer; }
-  #apk-dl svg { width:100%; height:100%; }
-  #apk-dl:active { transform:translateY(3px); box-shadow:0 1px 0 var(--navy); }
-  .is-app #apk-dl { display:none !important; }
-  body.busy #heartBtn { display:none; }
-  #heartBtn { position:fixed; right:max(12px,env(safe-area-inset-right)); bottom:max(12px,env(safe-area-inset-bottom)); z-index:5;
-              width:56px; height:56px; min-width:0; padding:9px; border-radius:50%; border:4px solid var(--navy); background:#ffc9de;
-              box-shadow:0 4px 0 var(--navy); }
-  #heartBtn:active { transform:translateY(3px); box-shadow:0 1px 0 var(--navy); }
-  #heartBtn svg, #closeDonate svg { width:100%; height:100%; }
+  /* ---- corner buttons: download (bottom left), donate (bottom right) ---- */
+  .corner { position:fixed; bottom:max(12px,env(safe-area-inset-bottom)); z-index:5; display:flex; align-items:center; justify-content:center;
+            width:56px; height:56px; min-width:0; padding:9px; border-radius:50%; border:4px solid var(--navy); background:#fff;
+            box-shadow:0 4px 0 var(--navy); cursor:pointer; }
+  .corner:active { transform:translateY(3px); box-shadow:0 1px 0 var(--navy); }
+  .corner svg { width:100%; height:100%; }
+  #apkBtn { left:max(12px,env(safe-area-inset-left)); }
+  #heartBtn { right:max(12px,env(safe-area-inset-right)); background:#ffc9de; }
   #donate { position:fixed; inset:0; z-index:12; background:#1b2a6bcc; display:flex; align-items:center; justify-content:center; padding:16px; }
-  #donate .card { position:relative; width:min(420px,100%); max-height:100%; overflow:auto; background:#fff; border:5px solid var(--navy);
+  #donate .card { position:relative; width:min(420px,100%); max-height:100%; overflow:auto; touch-action:pan-y; background:#fff; border:5px solid var(--navy);
                   border-radius:30px; padding:22px 22px 14px; box-shadow:0 8px 0 var(--navy); color:var(--navy); text-align:center;
                   user-select:text; -webkit-user-select:text; }
   #donate .card * { user-select:text; -webkit-user-select:text; }
@@ -87,11 +83,14 @@
   #gateQ { font-size:34px; font-weight:900; margin:4px 0 12px; }
   #gate .row { display:flex; gap:10px; justify-content:center; }
   #gateA { width:120px; font:inherit; font-size:28px; font-weight:800; text-align:center; color:var(--navy); border:4px solid var(--navy); border-radius:16px; padding:6px; }
-  #gate button[type=submit] { min-width:0; font-size:22px; padding:0 20px; border-radius:16px; border-width:4px; box-shadow:0 4px 0 var(--navy); }
+  #gate button[type=submit] { font:inherit; font-size:22px; font-weight:900; color:#fff; background:#2fc65a; border:4px solid var(--navy);
+                              border-radius:16px; padding:0 20px; box-shadow:0 4px 0 var(--navy); cursor:pointer; }
   #gate.wrong #gateA { border-color:#e03131; animation:shake .35s; }
   @keyframes shake { 25% { transform:translateX(-8px) } 75% { transform:translateX(8px) } }
   #closeDonate { position:absolute; top:10px; right:10px; width:48px; height:48px; min-width:0; padding:7px; border-radius:50%;
-                 border:4px solid var(--navy); background:#fff; box-shadow:none; }
+                 border:4px solid var(--navy); background:#fff; box-shadow:none; cursor:pointer; }
+  #closeDonate svg { width:100%; height:100%; }
+  body.busy .corner { display:none; }
 </style>
 </head>
 <body>
@@ -128,22 +127,21 @@
 <div id="opts"><label for="dur" aria-label="Putzzeit"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 8.5V13l3 2M9.5 2.5h5"/></svg></label>
   <select id="dur"><option value="60">1:00</option><option value="120">2:00</option><option value="150" selected>2:30</option><option value="180">3:00</option><option value="240">4:00</option></select>
 </div>
-<a id="apk-dl" href="teeth.apk" download="teeth.apk" aria-label="App herunterladen" title="App herunterladen"><svg viewBox="0 0 48 48" fill="none" stroke="#1b2a6b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 7 V31 M13 21 L24 32 L35 21 M9 41 H39"/></svg></a>
-
-<button id="heartBtn" hidden aria-label="Spendiere uns einen Kaffee"><svg viewBox="0 0 48 48" stroke="#1b2a6b" stroke-width="4" stroke-linejoin="round"><path d="M24 41 C10 31 4 24 4 16 C4 9 9 5 15 5 C19 5 22 7 24 11 C26 7 29 5 33 5 C39 5 44 9 44 16 C44 24 38 31 24 41 Z" fill="#ff4d8d"/></svg></button>
+<a id="apkBtn" class="corner" hidden href="teeth.apk" download="teeth.apk" data-i18n-label="apk"><svg viewBox="0 0 48 48" fill="none" stroke="#1b2a6b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 7 V31 M13 21 L24 32 L35 21 M9 41 H39"/></svg></a>
+<button id="heartBtn" class="corner" hidden data-i18n-label="donate"><svg viewBox="0 0 48 48" stroke="#1b2a6b" stroke-width="4" stroke-linejoin="round"><path d="M24 41 C10 31 4 24 4 16 C4 9 9 5 15 5 C19 5 22 7 24 11 C26 7 29 5 33 5 C39 5 44 9 44 16 C44 24 38 31 24 41 Z" fill="#ff4d8d"/></svg></button>
 
 <div id="donate" hidden>
   <div class="card">
-    <button id="closeDonate" aria-label="Schließen"><svg viewBox="0 0 48 48" fill="none" stroke="#1b2a6b" stroke-width="6" stroke-linecap="round"><path d="M13 13 L35 35 M35 13 L13 35"/></svg></button>
+    <button id="closeDonate" data-i18n-label="close"><svg viewBox="0 0 48 48" fill="none" stroke="#1b2a6b" stroke-width="6" stroke-linecap="round"><path d="M13 13 L35 35 M35 13 L13 35"/></svg></button>
     <svg class="cup" viewBox="0 0 64 64" stroke="#1b2a6b" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
       <path d="M24 6 C20 10 28 12 24 18 M34 6 C30 10 38 12 34 18" fill="none"/>
       <path d="M10 24 H48 V40 C48 50 40 56 29 56 C18 56 10 50 10 40 Z" fill="#c08457"/>
       <path d="M48 28 C58 28 58 42 47 42" fill="none"/><path d="M28 34 C24 30 18 34 24 40 L28 44 L32 40 C38 34 32 30 28 34 Z" fill="#ff4d8d" stroke-width="2.5"/></svg>
     <form id="gate" autocomplete="off">
-      <p>Für Erwachsene: Löse die Aufgabe, um fortzufahren.</p>
+      <p data-i18n="gate"></p>
       <div id="gateQ"></div>
       <div class="row">
-        <input id="gateA" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" aria-label="Antwort">
+        <input id="gateA" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" data-i18n-label="answer">
         <button type="submit">OK</button>
       </div>
     </form>
@@ -158,8 +156,50 @@
 (() => {
   const NS = "http://www.w3.org/2000/svg";
   const $ = id => document.getElementById(id);
-  const isApp = Boolean(window.AndroidBridge || /TeethApp/i.test(navigator.userAgent) || window.location.protocol === "file:");
-  if (isApp) { document.documentElement.classList.add("is-app"); }
+  // ---- UI strings (de/en); data-i18n sets textContent, data-i18n-label sets aria-label + title ----
+  const STRINGS = {
+    de: { apk: "Android-App herunterladen", donate: "Spendiere uns einen Kaffee", close: "Schließen", answer: "Antwort",
+          gate: "Für Erwachsene: Löse die Aufgabe, um fortzufahren.", offline: "Du bist offline. Verbinde dich mit dem Internet, um zu spenden.",
+          loading: "Lädt…", failed: "PayPal konnte nicht geladen werden. Bitte später erneut versuchen." },
+    en: { apk: "Download the Android app", donate: "Buy me a coffee", close: "Close", answer: "Answer",
+          gate: "For grown-ups: solve this to continue.", offline: "You're offline. Connect to the internet to donate.",
+          loading: "Loading…", failed: "PayPal couldn't be loaded. Please try again later." },
+  };
+  const T = STRINGS[document.documentElement.lang] || STRINGS.en;
+  for (const e of document.querySelectorAll("[data-i18n]")) e.textContent = T[e.dataset.i18n];
+  for (const e of document.querySelectorAll("[data-i18n-label]")) { e.setAttribute("aria-label", T[e.dataset.i18nLabel]); e.title = T[e.dataset.i18nLabel]; }
+
+  // ---- platform helpers: the Android wrapper injects window.AndroidBridge; browsers fall back to web APIs ----
+  const androidApp = !!window.AndroidBridge;
+  let wakeLock = null, wantAwake = false;
+  // Fallback for browsers without the Wake Lock API: a tiny looping video (teeth-specific; the template only has the API path).
+  const VIDEO = { webm: "data:video/webm;base64,GkXfo59ChoEBQveBAULygQRC84EIQoKEd2VibUKHgQJChYECGFOAZwEAAAAAAAHmEU2bdLpNu4tTq4QVSalmU6yBoU27i1OrhBZUrmtTrIHWTbuMU6uEElTDZ1OsggEjTbuMU6uEHFO7a1OsggHQ7AEAAAAAAABZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVSalmsCrXsYMPQkBNgIxMYXZmNjIuMy4xMDBXQYxMYXZmNjIuMy4xMDBEiYhAj0AAAAAAABZUrmvIrgEAAAAAAAA/14EBc8WI33EWIWEWfF6cgQAitZyDdW5kiIEAhoVWX1ZQOIOBASPjg4Q7msoA4JCwgRC6gRCagQJVsIRVuYEBElTDZ/tzc59jwIBnyJlFo4dFTkNPREVSRIeMTGF2ZjYyLjMuMTAwc3PWY8CLY8WI33EWIWEWfF5nyKFFo4dFTkNPREVSRIeUTGF2YzYyLjExLjEwMCBsaWJ2cHhnyKFFo4hEVVJBVElPTkSHkzAwOjAwOjAxLjAwMDAwMDAwMAAfQ7Z1qOeBAKOjgQAAgBACAJ0BKhAAEAAARwiFhYiZhIgCAgAMDWAA/v+rUIAcU7trkbuPs4EAt4r3gQHxggGj8IED", mp4: "data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAMUbW9vdgAAAGxtdmhkAAAAAAAAAAAAAAAAAAAD6AAAA+gAAQAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAj90cmFrAAAAXHRraGQAAAADAAAAAAAAAAAAAAABAAAAAAAAA+gAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAABAAAAAQAAAAAAAkZWR0cwAAABxlbHN0AAAAAAAAAAEAAAPoAAAAAAABAAAAAAG3bWRpYQAAACBtZGhkAAAAAAAAAAAAAAAAAABAAAAAQABVxAAAAAAALWhkbHIAAAAAAAAAAHZpZGUAAAAAAAAAAAAAAABWaWRlb0hhbmRsZXIAAAABYm1pbmYAAAAUdm1oZAAAAAEAAAAAAAAAAAAAACRkaW5mAAAAHGRyZWYAAAAAAAAAAQAAAAx1cmwgAAAAAQAAASJzdGJsAAAAvnN0c2QAAAAAAAAAAQAAAK5hdmMxAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAABAAEABIAAAASAAAAAAAAAABFUxhdmM2Mi4xMS4xMDAgbGlieDI2NAAAAAAAAAAAAAAAGP//AAAANGF2Y0MBZAAK/+EAF2dkAAqs2V7ARAAAAwAEAAADAAg8SJZYAQAGaOvjyyLA/fj4AAAAABBwYXNwAAAAAQAAAAEAAAAUYnRydAAAAAAAABW4AAAAAAAAABhzdHRzAAAAAAAAAAEAAAABAABAAAAAABxzdHNjAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAUc3RzegAAAAAAAAK3AAAAAQAAABRzdGNvAAAAAAAAAAEAAANEAAAAYXVkdGEAAABZbWV0YQAAAAAAAAAhaGRscgAAAAAAAAAAbWRpcmFwcGwAAAAAAAAAAAAAAAAsaWxzdAAAACSpdG9vAAAAHGRhdGEAAAABAAAAAExhdmY2Mi4zLjEwMAAAAAhmcmVlAAACv21kYXQAAAKfBgX//5vcRem95tlIt5Ys2CDZI+7veDI2NCAtIGNvcmUgMTY1IC0gSC4yNjQvTVBFRy00IEFWQyBjb2RlYyAtIENvcHlsZWZ0IDIwMDMtMjAyNSAtIGh0dHA6Ly93d3cudmlkZW9sYW4ub3JnL3gyNjQuaHRtbCAtIG9wdGlvbnM6IGNhYmFjPTEgcmVmPTMgZGVibG9jaz0xOjA6MCBhbmFseXNlPTB4MzoweDExMyBtZT1oZXggc3VibWU9NyBwc3k9MSBwc3lfcmQ9MS4wMDowLjAwIG1peGVkX3JlZj0xIG1lX3JhbmdlPTE2IGNocm9tYV9tZT0xIHRyZWxsaXM9MSA4eDhkY3Q9MSBjcW09MCBkZWFkem9uZT0yMSwxMSBmYXN0X3Bza2lwPTEgY2hyb21hX3FwX29mZnNldD0tMiB0aHJlYWRzPTEgbG9va2FoZWFkX3RocmVhZHM9MSBzbGljZWRfdGhyZWFkcz0wIG5yPTAgZGVjaW1hdGU9MSBpbnRlcmxhY2VkPTAgYmx1cmF5X2NvbXBhdD0wIGNvbnN0cmFpbmVkX2ludHJhPTAgYmZyYW1lcz0zIGJfcHlyYW1pZD0yIGJfYWRhcHQ9MSBiX2JpYXM9MCBkaXJlY3Q9MSB3ZWlnaHRiPTEgb3Blbl9nb3A9MCB3ZWlnaHRwPTIga2V5aW50PTI1MCBrZXlpbnRfbWluPTEgc2NlbmVjdXQ9NDAgaW50cmFfcmVmcmVzaD0wIHJjX2xvb2thaGVhZD00MCByYz1jcmYgbWJ0cmVlPTEgY3JmPTIzLjAgcWNvbXA9MC42MCBxcG1pbj0wIHFwbWF4PTY5IHFwc3RlcD00IGlwX3JhdGlvPTEuNDAgYXE9MToxLjAwAIAAAAAQZYiEABX//vfJ78Cm69vfgQ==" };
+  let vid = null;
+  /** Keep the screen on while something runs (a timer, a game...). Call setAwake(false) when done. */
+  async function setAwake(on) {
+    wantAwake = on;
+    if (androidApp) { window.AndroidBridge.setKeepScreenOn(on); return; }
+    try {
+      if ("wakeLock" in navigator) {
+        if (on && !wakeLock) { wakeLock = await navigator.wakeLock.request("screen"); wakeLock.addEventListener("release", () => { wakeLock = null; }); }
+        if (!on && wakeLock) { await wakeLock.release(); wakeLock = null; }
+        return;
+      }
+    } catch {}
+    // No Wake Lock API (plain-http LAN, old iOS): a hidden looping video keeps the screen on.
+    if (!on) { if (vid) vid.pause(); return; }
+    if (!vid) {
+      vid = document.createElement("video");
+      vid.setAttribute("playsinline", ""); vid.muted = true; vid.loop = true;
+      vid.style.cssText = "position:fixed;width:1px;height:1px;opacity:.01;pointer-events:none;left:0;top:0";
+      vid.src = vid.canPlayType("video/webm") ? VIDEO.webm : VIDEO.mp4; document.body.appendChild(vid);
+    }
+    vid.play().catch(() => {});
+  }
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && wakeLock === null && wantAwake) setAwake(true); });
+  /** Short haptic pulse (milliseconds). */
+  function buzz(ms) { if (androidApp) window.AndroidBridge.vibrate(ms); else navigator.vibrate?.(ms); }
+  // ---- app logic ----
   // Phases clockwise from top right; last is the front teeth.
   const PHASES = [
     { key: "TR", c: "#ff5d73" },
@@ -221,7 +261,7 @@
 
   let state = "idle";            // idle | running | paused | done
   let total = +durSel.value * 1000;
-  let elapsed = 0, startedAt = 0, raf = 0, lastIdx = -1, audio = null, wakeLock = null;
+  let elapsed = 0, startedAt = 0, raf = 0, lastIdx = -1, audio = null;
 
   const fmt = ms => { const s = Math.ceil(ms / 1000); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); };
 
@@ -237,50 +277,7 @@
         o.start(t0); o.stop(t0 + 0.4);
       });
     } catch (e) {}
-    if (window.AndroidBridge && window.AndroidBridge.vibrate) { window.AndroidBridge.vibrate(final ? 400 : 150); }
-    else if (navigator.vibrate) navigator.vibrate(final ? [200, 100, 200, 100, 400] : 150);
-  }
-
-  // Keep screen awake: Screen Wake Lock API (secure contexts), else a hidden looping video (works on plain http / older iOS).
-  const VIDEO = { webm: "data:video/webm;base64,GkXfo59ChoEBQveBAULygQRC84EIQoKEd2VibUKHgQJChYECGFOAZwEAAAAAAAHmEU2bdLpNu4tTq4QVSalmU6yBoU27i1OrhBZUrmtTrIHWTbuMU6uEElTDZ1OsggEjTbuMU6uEHFO7a1OsggHQ7AEAAAAAAABZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVSalmsCrXsYMPQkBNgIxMYXZmNjIuMy4xMDBXQYxMYXZmNjIuMy4xMDBEiYhAj0AAAAAAABZUrmvIrgEAAAAAAAA/14EBc8WI33EWIWEWfF6cgQAitZyDdW5kiIEAhoVWX1ZQOIOBASPjg4Q7msoA4JCwgRC6gRCagQJVsIRVuYEBElTDZ/tzc59jwIBnyJlFo4dFTkNPREVSRIeMTGF2ZjYyLjMuMTAwc3PWY8CLY8WI33EWIWEWfF5nyKFFo4dFTkNPREVSRIeUTGF2YzYyLjExLjEwMCBsaWJ2cHhnyKFFo4hEVVJBVElPTkSHkzAwOjAwOjAxLjAwMDAwMDAwMAAfQ7Z1qOeBAKOjgQAAgBACAJ0BKhAAEAAARwiFhYiZhIgCAgAMDWAA/v+rUIAcU7trkbuPs4EAt4r3gQHxggGj8IED", mp4: "data:video/mp4;base64,AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAMUbW9vdgAAAGxtdmhkAAAAAAAAAAAAAAAAAAAD6AAAA+gAAQAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAj90cmFrAAAAXHRraGQAAAADAAAAAAAAAAAAAAABAAAAAAAAA+gAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAABAAAAAABAAAAAQAAAAAAAkZWR0cwAAABxlbHN0AAAAAAAAAAEAAAPoAAAAAAABAAAAAAG3bWRpYQAAACBtZGhkAAAAAAAAAAAAAAAAAABAAAAAQABVxAAAAAAALWhkbHIAAAAAAAAAAHZpZGUAAAAAAAAAAAAAAABWaWRlb0hhbmRsZXIAAAABYm1pbmYAAAAUdm1oZAAAAAEAAAAAAAAAAAAAACRkaW5mAAAAHGRyZWYAAAAAAAAAAQAAAAx1cmwgAAAAAQAAASJzdGJsAAAAvnN0c2QAAAAAAAAAAQAAAK5hdmMxAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAABAAEABIAAAASAAAAAAAAAABFUxhdmM2Mi4xMS4xMDAgbGlieDI2NAAAAAAAAAAAAAAAGP//AAAANGF2Y0MBZAAK/+EAF2dkAAqs2V7ARAAAAwAEAAADAAg8SJZYAQAGaOvjyyLA/fj4AAAAABBwYXNwAAAAAQAAAAEAAAAUYnRydAAAAAAAABW4AAAAAAAAABhzdHRzAAAAAAAAAAEAAAABAABAAAAAABxzdHNjAAAAAAAAAAEAAAABAAAAAQAAAAEAAAAUc3RzegAAAAAAAAK3AAAAAQAAABRzdGNvAAAAAAAAAAEAAANEAAAAYXVkdGEAAABZbWV0YQAAAAAAAAAhaGRscgAAAAAAAAAAbWRpcmFwcGwAAAAAAAAAAAAAAAAsaWxzdAAAACSpdG9vAAAAHGRhdGEAAAABAAAAAExhdmY2Mi4zLjEwMAAAAAhmcmVlAAACv21kYXQAAAKfBgX//5vcRem95tlIt5Ys2CDZI+7veDI2NCAtIGNvcmUgMTY1IC0gSC4yNjQvTVBFRy00IEFWQyBjb2RlYyAtIENvcHlsZWZ0IDIwMDMtMjAyNSAtIGh0dHA6Ly93d3cudmlkZW9sYW4ub3JnL3gyNjQuaHRtbCAtIG9wdGlvbnM6IGNhYmFjPTEgcmVmPTMgZGVibG9jaz0xOjA6MCBhbmFseXNlPTB4MzoweDExMyBtZT1oZXggc3VibWU9NyBwc3k9MSBwc3lfcmQ9MS4wMDowLjAwIG1peGVkX3JlZj0xIG1lX3JhbmdlPTE2IGNocm9tYV9tZT0xIHRyZWxsaXM9MSA4eDhkY3Q9MSBjcW09MCBkZWFkem9uZT0yMSwxMSBmYXN0X3Bza2lwPTEgY2hyb21hX3FwX29mZnNldD0tMiB0aHJlYWRzPTEgbG9va2FoZWFkX3RocmVhZHM9MSBzbGljZWRfdGhyZWFkcz0wIG5yPTAgZGVjaW1hdGU9MSBpbnRlcmxhY2VkPTAgYmx1cmF5X2NvbXBhdD0wIGNvbnN0cmFpbmVkX2ludHJhPTAgYmZyYW1lcz0zIGJfcHlyYW1pZD0yIGJfYWRhcHQ9MSBiX2JpYXM9MCBkaXJlY3Q9MSB3ZWlnaHRiPTEgb3Blbl9nb3A9MCB3ZWlnaHRwPTIga2V5aW50PTI1MCBrZXlpbnRfbWluPTEgc2NlbmVjdXQ9NDAgaW50cmFfcmVmcmVzaD0wIHJjX2xvb2thaGVhZD00MCByYz1jcmYgbWJ0cmVlPTEgY3JmPTIzLjAgcWNvbXA9MC42MCBxcG1pbj0wIHFwbWF4PTY5IHFwc3RlcD00IGlwX3JhdGlvPTEuNDAgYXE9MToxLjAwAIAAAAAQZYiEABX//vfJ78Cm69vfgQ==" };
-  let vid = null, wantAwake = false;
-  function setAndroidScreenAwake(keepOn) {
-    try {
-      if (window.AndroidBridge && window.AndroidBridge.setKeepScreenOn) {
-        window.AndroidBridge.setKeepScreenOn(keepOn);
-      }
-    } catch (e) {}
-  }
-
-  async function lock() {
-    wantAwake = true;
-    setAndroidScreenAwake(true);
-    try {
-      if ("wakeLock" in navigator) {
-        if (!wakeLock) {
-          wakeLock = await navigator.wakeLock.request("screen");
-          wakeLock.addEventListener("release", () => {
-            wakeLock = null;
-            if (wantAwake && !document.hidden) lock();
-          });
-        }
-        return;
-      }
-    } catch (e) {}
-    if (!vid) {
-      vid = document.createElement("video");
-      vid.setAttribute("playsinline", ""); vid.muted = true; vid.loop = true;
-      vid.style.cssText = "position:fixed;width:1px;height:1px;opacity:.01;pointer-events:none;left:0;top:0";
-      const src = vid.canPlayType("video/webm") ? VIDEO.webm : VIDEO.mp4;
-      vid.src = src; document.body.appendChild(vid);
-    }
-    vid.play().catch(() => {});
-  }
-  function unlock() {
-    wantAwake = false;
-    setAndroidScreenAwake(false);
-    if (wakeLock) { wakeLock.release().catch(() => {}); wakeLock = null; }
-    if (vid) vid.pause();
+    buzz(final ? 400 : 150);
   }
 
   function paintTeeth(idx) {
@@ -312,16 +309,11 @@
     mainBtn.classList.toggle("pause", state === "running");
     opts.style.visibility = state === "idle" ? "visible" : "hidden";
     document.body.classList.toggle("busy", state !== "idle");
-    const apkDl = $("apk-dl");
-    if (apkDl) {
-      apkDl.style.display = (!isApp && state === "idle") ? "flex" : "none";
-    }
   }
 
   function tick() {
     elapsed = Math.min(total, performance.now() - startedAt);
     if (elapsed >= total) { finish(); return; }
-    if (state === "running") setAndroidScreenAwake(true);
     render();
     raf = requestAnimationFrame(tick);
   }
@@ -329,10 +321,10 @@
   function begin() {
     state = "running"; startedAt = performance.now() - elapsed;
     audio = audio || new (window.AudioContext || window.webkitAudioContext)(); audio.resume && audio.resume();
-    lock(); lastIdx = -1; ui(); cancelAnimationFrame(raf); tick();
+    setAwake(true); lastIdx = -1; ui(); cancelAnimationFrame(raf); tick();
   }
   function finish() {
-    cancelAnimationFrame(raf); state = "done"; elapsed = total; lastIdx = -1; unlock(); chime(true); render(); ui(); party();
+    cancelAnimationFrame(raf); state = "done"; elapsed = total; lastIdx = -1; setAwake(false); chime(true); render(); ui(); party();
   }
   function party() {
     const box = $("confetti"); box.textContent = "";
@@ -347,27 +339,25 @@
   function pause() { cancelAnimationFrame(raf); state = "paused"; lastIdx = -1; render(); ui(); }
   function reset() {
     $("confetti").textContent = "";
-    cancelAnimationFrame(raf); state = "idle"; elapsed = 0; total = +durSel.value * 1000; lastIdx = -1; unlock(); render(); ui();
+    cancelAnimationFrame(raf); state = "idle"; elapsed = 0; total = +durSel.value * 1000; lastIdx = -1; setAwake(false); render(); ui();
   }
 
   mainBtn.onclick = () => { state === "idle" || state === "paused" ? begin() : pause(); };
   resetBtn.onclick = reset;
   durSel.onchange = reset;
-  document.addEventListener("visibilitychange", () => { if (wantAwake && !document.hidden) lock(); });
-  window.addEventListener("focus", () => { if (wantAwake) lock(); });
 
   reset();
 
-  // Donate: PayPal hosted button, loaded only after a parent gate so the app stays offline-first.
+  // ---- donate: PayPal hosted button, loaded only after a parent gate so the app stays offline-first ----
   const PAYPAL_SDK = "https://www.paypal.com/sdk/js?client-id=BAA3I7Ebq_jrRrnlIQTorf96Vylh95OQRNrqVHNIKrAZwR_W_TSGVwxmFpKQHdeP5y6_VcXKmOZ57oqBc8&components=hosted-buttons&disable-funding=venmo&currency=EUR";
   const PAYPAL_PAGE = "https://www.paypal.com/ncp/payment/7TRVZVKH42ZM6";
   let paypalState = "idle";   // idle | loading | ready
   const donateNote = text => { $("donateNote").textContent = text; $("donateNote").hidden = !text; };
   function loadPaypal() {
     if (paypalState !== "idle") return;
-    if (!navigator.onLine) return donateNote("Du bist offline. Verbinde dich mit dem Internet, um zu spenden.");
-    paypalState = "loading"; donateNote("Lädt…");
-    const fail = () => { paypalState = "idle"; donateNote("PayPal konnte nicht geladen werden. Bitte später erneut versuchen."); };
+    if (!navigator.onLine) return donateNote(T.offline);
+    paypalState = "loading"; donateNote(T.loading);
+    const fail = () => { paypalState = "idle"; donateNote(T.failed); };
     const s = document.createElement("script");
     s.src = PAYPAL_SDK;
     s.onload = () => {
@@ -396,7 +386,7 @@
     const v = $("gateA").value.trim();
     if (v !== "" && Number(v) === gateAnswer) {
       $("gateA").blur();
-      if (isApp && window.AndroidBridge && window.AndroidBridge.openUrl) {
+      if (androidApp) {
         // The WebView can't render the PayPal SDK button; open PayPal's hosted page in the system browser instead.
         closeDonate();
         window.AndroidBridge.openUrl(PAYPAL_PAGE);
@@ -412,12 +402,15 @@
   $("heartBtn").addEventListener("click", openDonate);
   $("closeDonate").addEventListener("click", closeDonate);
   $("donate").addEventListener("click", e => { if (e.target.id === "donate") closeDonate(); });
-  // Heart: in the APK always (opens PayPal in the system browser); in a browser only on the real deployment (HTTPS or service worker).
-  const showHeart = () => { $("heartBtn").hidden = !(isApp || location.protocol === "https:" || navigator.serviceWorker?.controller); };
+  // Donations only on the real deployment: inside the APK, or served over HTTPS / running under the service worker.
+  const showHeart = () => { $("heartBtn").hidden = !(androidApp || location.protocol === "https:" || navigator.serviceWorker?.controller); };
   navigator.serviceWorker?.addEventListener("controllerchange", showHeart);
   showHeart();
+  // The APK only exists where it was built (GitHub Pages CI, or a local `bun android/build.ts`), so probe for it.
+  if (!androidApp) fetch("teeth.apk", { method: "HEAD" }).then(r => { $("apkBtn").hidden = !r.ok; }).catch(() => {});
 
-  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+  // Inside the APK the WebView serves the assets itself, so no service worker there.
+  if ("serviceWorker" in navigator && !androidApp) navigator.serviceWorker.register("sw.js").catch(() => {});
 })();
 </script>
 </body>

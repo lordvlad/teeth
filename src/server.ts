@@ -1,7 +1,7 @@
 import { join, normalize, sep } from "node:path";
 
 const root = join(import.meta.dir, "..", "public");
-const port = Number(process.env.PORT ?? 8791);
+const port = Number(process.env.PORT ?? 8790);
 
 const server = Bun.serve({
   port,
@@ -14,9 +14,9 @@ const server = Bun.serve({
     if (full !== root && !full.startsWith(root + sep)) return new Response("Not Found", { status: 404 });
     const file = Bun.file(full);
     if (!(await file.exists())) return new Response("Not Found", { status: 404 });
-    // sw.js and the HTML must revalidate so updates reach clients; the SW handles offline caching.
-    const fresh = full.endsWith(".html") || full.endsWith("sw.js") || full.endsWith(".webmanifest");
-    return new Response(file, { headers: { "Cache-Control": fresh ? "no-cache" : "public, max-age=3600" } });
+    // Always revalidate: the service worker does the offline caching, and a long HTTP max-age would hand it
+    // stale copies when it (re)fills its cache after an update.
+    return new Response(file, { headers: { "Cache-Control": "no-cache" } });
   },
 });
 
