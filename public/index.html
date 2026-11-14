@@ -28,9 +28,9 @@
   #track { fill:none; stroke:#fff; stroke-opacity:.55; stroke-width:18; }
   #ring { fill:none; stroke:#ff6b6b; stroke-width:18; stroke-linecap:round;
           transform:rotate(-90deg); transform-origin:200px 200px; transition:stroke .4s; }
-  .tooth { fill:#fffdf4; stroke:#d6cfb4; stroke-width:9; stroke-linejoin:round; transition:fill .3s; }
+  .tooth { fill:#fffdf6; stroke:#bfae92; stroke-width:4; stroke-linejoin:round; transition:fill .3s; }
   .tooth.done { fill:#e3f6e7; stroke:#b7dcc0; }
-  .tooth.active { fill:var(--c); stroke:var(--navy); stroke-width:12; filter:drop-shadow(0 0 22px var(--c));
+  .tooth.active { fill:var(--c); stroke:var(--navy); stroke-width:7; filter:drop-shadow(0 0 12px var(--c));
                   animation:bounce .6s ease-in-out infinite alternate; transform-origin:0 0; }
   @keyframes bounce { from { scale:1 } to { scale:1.1 } }
   #time { font-size:clamp(34px,9vmin,64px); line-height:1; font-weight:900; color:#fff; -webkit-text-stroke:.16em var(--navy); paint-order:stroke fill;
@@ -100,22 +100,76 @@
     <circle id="disc" cx="200" cy="200" r="176"/>
     <circle id="track" cx="200" cy="200" r="185"/>
     <circle id="ring" cx="200" cy="200" r="185" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="0"/>
-    <!-- Open mouth, drawn in a 911 x 1297 space and scaled to fit the disc. Lips, cavity, throat, gums and tongue are static; gums and teeth are generated below. -->
-    <g id="mouth" transform="translate(79.3 28.2) scale(.265)">
-      <ellipse cx="455.5" cy="648.5" rx="455" ry="648" fill="#fb7b7b"/>
-      <ellipse cx="455.5" cy="650" rx="432" ry="622" fill="#e8686d"/>
-      <path d="M150 1135 C300 1255 610 1255 770 1135" fill="none" stroke="#ff9193" stroke-width="42" stroke-linecap="round" opacity=".85"/>
-      <path d="M45 880 C60 1000 110 1080 160 1130 M866 880 C851 1000 801 1080 751 1130" fill="none" stroke="#ff9193" stroke-width="22" stroke-linecap="round" opacity=".7"/>
-      <ellipse cx="455.5" cy="640" rx="405" ry="568" fill="#8f3b3d"/>
-      <ellipse cx="455.5" cy="470" rx="300" ry="330" fill="#ad4a4a"/>
-      <ellipse cx="455.5" cy="572" rx="205" ry="150" fill="#6a2024"/>
-      <rect x="424" y="440" width="62" height="178" rx="31" fill="#b04b4e"/>
-      <g id="gums"></g>
-      <path d="M455 727 C400 695 335 675 272 690 C215 705 205 790 210 870 C215 980 330 1060 455 1062 C580 1060 695 980 700 870 C705 790 695 705 640 690 C580 675 510 695 455 727 Z" fill="#fdb7a8"/>
-      <path d="M210 880 C230 1000 340 1062 455 1062 C570 1062 680 1000 700 880 C690 960 600 1030 455 1030 C310 1030 220 960 210 880 Z" fill="#f9a590"/>
-      <ellipse cx="455" cy="890" rx="85" ry="135" fill="#fbaa97"/>
-      <path d="M335 705 C390 715 425 770 420 850 C410 800 370 750 335 705 Z M575 705 C520 715 490 770 500 850 C515 800 545 750 575 705 Z" fill="#fdd0c6" opacity=".85"/>
-      <g id="teeth"></g>
+    <!-- Lion head (design/lion.py generates the region between the markers; run `python3 design/lion.py --apply`).
+         Drawn in a 768x1024 space; the mane (centre 383,447, radius ~348) is scaled to fill the disc. -->
+    <g id="lion" transform="translate(8.5 -23.5) scale(.5)">
+    <!-- lion:begin -->
+<g stroke="#b8591a" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<defs>
+  <linearGradient id="maneG" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#fa8f27"/><stop offset="1" stop-color="#ef7a1c"/></linearGradient>
+  <linearGradient id="faceG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fcc94b"/><stop offset=".6" stop-color="#f9bd3a"/><stop offset="1" stop-color="#f6ae30"/></linearGradient>
+  <linearGradient id="bodyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbc03e"/><stop offset="1" stop-color="#f5ae2e"/></linearGradient>
+  <radialGradient id="mouthG" cx="50%" cy="48%" r="60%"><stop offset="0" stop-color="#8e2a38"/><stop offset=".55" stop-color="#b3434e"/><stop offset="1" stop-color="#c4545c"/></radialGradient>
+  <linearGradient id="tongueG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fb8d8d"/><stop offset="1" stop-color="#f4707a"/></linearGradient>
+  <clipPath id="mouthClip"><path d="M205 478 C200 420 262 396 385 396 C508 396 570 420 565 478 C562 572 484 642 385 642 C286 642 208 572 205 478 Z"/></clipPath>
+</defs>
+  <!-- mane -->
+  <path d="M457.8 129.2 A75.8 75.8 0 0 1 592.5 192.1 A74.9 74.9 0 0 1 685.7 305.6 A74.1 74.1 0 0 1 719.0 447.0 A74.1 74.1 0 0 1 685.7 588.4 A74.9 74.9 0 0 1 592.5 701.9 A75.8 75.8 0 0 1 457.8 764.8 A76.3 76.3 0 0 1 308.2 764.8 A75.8 75.8 0 0 1 173.5 701.9 A74.9 74.9 0 0 1 80.3 588.4 A74.1 74.1 0 0 1 47.0 447.0 A74.1 74.1 0 0 1 80.3 305.6 A74.9 74.9 0 0 1 173.5 192.1 A75.8 75.8 0 0 1 308.2 129.2 A76.3 76.3 0 0 1 457.8 129.2 Z" fill="url(#maneG)" stroke-width="6"/>
+  <path d="M449.8 164.3 A67.8 67.8 0 0 1 570.0 220.7 A67.0 67.0 0 0 1 653.3 322.3 A66.4 66.4 0 0 1 683.0 449.0 A66.4 66.4 0 0 1 653.3 575.7 A67.0 67.0 0 0 1 570.0 677.3 A67.8 67.8 0 0 1 449.8 733.7 A68.1 68.1 0 0 1 316.2 733.7 A67.8 67.8 0 0 1 196.0 677.3 A67.0 67.0 0 0 1 112.7 575.7 A66.4 66.4 0 0 1 83.0 449.0 A66.4 66.4 0 0 1 112.7 322.3 A67.0 67.0 0 0 1 196.0 220.7 A67.8 67.8 0 0 1 316.2 164.3 A68.1 68.1 0 0 1 449.8 164.3 Z" fill="none" stroke="#f9a04a" stroke-width="5" opacity=".55"/>
+  <!-- ears -->
+  <circle cx="198" cy="306" r="46" fill="#f9bd3a"/>
+  <circle cx="206" cy="311" r="28" fill="#dc9a3d" stroke-width="4"/>
+  <path d="M196 322 Q200 300 216 296" fill="none" stroke="#a95a1b" stroke-width="4"/>
+  <circle cx="572" cy="306" r="46" fill="#f9bd3a"/>
+  <circle cx="564" cy="311" r="28" fill="#dc9a3d" stroke-width="4"/>
+  <path d="M574 322 Q570 300 554 296" fill="none" stroke="#a95a1b" stroke-width="4"/>
+  <!-- face -->
+  <ellipse cx="385" cy="475" rx="236" ry="224" fill="#f2a82e"/>
+  <ellipse cx="385" cy="462" rx="224" ry="208" fill="url(#faceG)" stroke="none"/>
+  <path d="M345 252 C334 236 348 224 362 232 C360 218 376 206 388 213 C396 206 408 216 408 230 C411 238 406 248 400 256 Z" fill="#fbc44c"/>
+  <path d="M362 232 C366 238 372 240 378 236" fill="none" stroke-width="3.5"/>
+  <path d="M284 299 Q300 289 318 297 M456 297 Q474 289 490 299" fill="none" stroke="#ec8a2c" stroke-width="9"/>
+  <path d="M250 342 Q284 300 322 334 M448 334 Q486 300 520 342" fill="none" stroke="#7a3a14" stroke-width="9"/>
+  <ellipse cx="243" cy="371" rx="22" ry="13" fill="#f3a35d" stroke="none"/>
+  <ellipse cx="524" cy="371" rx="22" ry="13" fill="#f3a35d" stroke="none"/>
+  <path d="M358 345 Q384 333 410 345 Q410 366 384 372 Q358 366 358 345 Z" fill="#a85f2b" stroke="#7a3a14" stroke-width="4"/>
+  <ellipse cx="383" cy="345" rx="12" ry="5" fill="#c98a4c" stroke="none"/>
+  <path d="M384 372 V384 M384 384 C372 398 338 396 318 378 M384 384 C396 398 432 396 452 378" fill="none" stroke="#a85f2b" stroke-width="4"/>
+  <g fill="#a85f2b" stroke="none"><circle cx="318" cy="366" r="2.5"/><circle cx="332" cy="372" r="2.5"/><circle cx="346" cy="368" r="2.5"/><circle cx="420" cy="368" r="2.5"/><circle cx="436" cy="372" r="2.5"/><circle cx="450" cy="366" r="2.5"/></g>
+  <!-- mouth -->
+  <path d="M205 478 C200 420 262 396 385 396 C508 396 570 420 565 478 C562 572 484 642 385 642 C286 642 208 572 205 478 Z" fill="url(#mouthG)" stroke="#8f3a24" stroke-width="7"/>
+  <g clip-path="url(#mouthClip)" stroke="none">
+    <ellipse cx="385" cy="492" rx="88" ry="76" fill="#822433"/>
+    <ellipse cx="385" cy="488" rx="62" ry="56" fill="#611728"/>
+    <path d="M350 440 C346 480 356 516 385 520 C414 516 424 480 420 440 Z" fill="#a8404f"/>
+    <path d="M366 452 C364 480 372 502 385 506 C398 502 406 480 404 452" fill="none" stroke="#8b2c3c" stroke-width="3.5"/>
+    <path d="M286 580 C300 548 345 534 385 534 C428 534 472 548 488 580 C470 618 432 636 385 636 C340 636 302 618 286 580 Z" fill="url(#tongueG)"/>
+    <path d="M300 566 C330 548 360 544 385 546 C410 544 440 548 470 566" fill="none" stroke="#fdb1b0" stroke-width="4" opacity=".8"/>
+    <path d="M385 560 C380 584 384 606 392 626" fill="none" stroke="#ee6370" stroke-width="5"/>
+    <path d="M205 400 H565 V420 C520 410 450 408 385 408 C320 408 250 410 205 420 Z" fill="#ee8e8e"/>
+    <path d="M205 640 H565 V618 C520 626 450 630 385 630 C320 630 250 626 205 618 Z" fill="#ee8e8e"/>
+  </g>
+<g id="teeth" fill="#fffdf6" stroke="#bfae92" stroke-width="2.5">
+  <g transform="translate(285 451)"><path class="tooth" data-k="TL" d="M-27 -42 C-7 -49 13 -47 27 -41 C26 -8 14 22 -3 40 C-19 16 -27 -12 -27 -42 Z"/></g>
+  <g transform="translate(485 451)"><path class="tooth" data-k="TR" d="M-27 -41 C-13 -47 7 -49 27 -42 C27 -12 19 16 3 40 C-13 20 -26 -8 -27 -41 Z"/></g>
+  <g transform="translate(244 452) rotate(-20)"><rect class="tooth" data-k="TL" x="-17" y="-15" width="34" height="30" rx="11.4"/></g>
+  <g transform="translate(526 452) rotate(20)"><rect class="tooth" data-k="TR" x="-17" y="-15" width="34" height="30" rx="11.4"/></g>
+  <g transform="translate(326 425)"><path class="tooth" data-k="F" d="M-18 -22 H18 V8 C18 18 10 22 0 22 C-10 22 -18 18 -18 8 Z"/></g>
+  <g transform="translate(364 424)"><path class="tooth" data-k="F" d="M-18 -22 H18 V8 C18 18 10 22 0 22 C-10 22 -18 18 -18 8 Z"/></g>
+  <g transform="translate(403 424)"><path class="tooth" data-k="F" d="M-18 -22 H18 V8 C18 18 10 22 0 22 C-10 22 -18 18 -18 8 Z"/></g>
+  <g transform="translate(441 425)"><path class="tooth" data-k="F" d="M-18 -22 H18 V8 C18 18 10 22 0 22 C-10 22 -18 18 -18 8 Z"/></g>
+  <g transform="translate(287 589)"><path class="tooth" data-k="BL" d="M-25 25 C-27 3 -15 -13 3 -27 C19 -11 29 7 25 27 C11 35 -11 35 -25 25 Z"/></g>
+  <g transform="translate(482 589)"><path class="tooth" data-k="BR" d="M-24 27 C-28 9 -18 -11 0 -27 C16 -13 28 5 24 25 C12 35 -10 35 -24 27 Z"/></g>
+  <g transform="translate(253 575) rotate(22)"><rect class="tooth" data-k="BL" x="-19" y="-17" width="38" height="34" rx="12.9"/></g>
+  <g transform="translate(517 575) rotate(-22)"><rect class="tooth" data-k="BR" x="-19" y="-17" width="38" height="34" rx="12.9"/></g>
+  <g transform="translate(329 616)"><path class="tooth" data-k="F" d="M-19 18 H19 V-6 C19 -16 10 -18 0 -18 C-10 -18 -19 -16 -19 -6 Z"/></g>
+  <g transform="translate(367 621)"><path class="tooth" data-k="F" d="M-19 18 H19 V-6 C19 -16 10 -18 0 -18 C-10 -18 -19 -16 -19 -6 Z"/></g>
+  <g transform="translate(403 621)"><path class="tooth" data-k="F" d="M-19 18 H19 V-6 C19 -16 10 -18 0 -18 C-10 -18 -19 -16 -19 -6 Z"/></g>
+  <g transform="translate(441 616)"><path class="tooth" data-k="F" d="M-19 18 H19 V-6 C19 -16 10 -18 0 -18 C-10 -18 -19 -16 -19 -6 Z"/></g>
+</g>
+  <path d="M356 664 Q385 676 414 664" fill="none" stroke="#c0701c" stroke-width="4"/>
+</g>
+    <!-- lion:end -->
     </g>
   </svg>
 </div>
@@ -208,41 +262,9 @@
     { key: "TL", c: "#9b5de5" },
     { key: "F",  c: "#f15bb5" },
   ];
-  // Teeth sit on two horseshoe arches in the mouth's 911 x 1297 space (upper: front at the top; lower: front at the bottom).
-  // Per side, from the front outward: central incisor, lateral incisor (front block), then canine, premolar, molar.
-  const SIZES = [[125, 150], [100, 135], [105, 135], [120, 115], [170, 125]]; // [width along the arch, radial height]
-  const ARCH = { U: { cy: 555, a: 335, b: 360, up: -1, k: 1 }, L: { cy: 780, a: 335, b: 335, up: 1, k: .92 } };
-  const CX = 455, PX_PER_DEG = 6, GUM_END = 104;
+  // Teeth are part of the lion artwork (design/lion.py): each carries data-k = TR | BR | BL | TL (fang + molar) or F (8 front teeth).
   const groups = {}; PHASES.forEach(p => groups[p.key] = []);
-  const teethG = $("teeth"), gumsG = $("gums");
-  const mk = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
-  for (const jaw of ["U", "L"]) {
-    const { cy, a, b, up, k } = ARCH[jaw];
-    // Gum band along the whole arch, behind the teeth.
-    let d = "";
-    for (let deg = -GUM_END; deg <= GUM_END; deg += 4) {
-      const th = deg * Math.PI / 180;
-      d += `${d ? "L" : "M"}${(CX + a * Math.sin(th)).toFixed(1)} ${(cy + up * b * Math.cos(th)).toFixed(1)} `;
-    }
-    gumsG.appendChild(mk("path", { d, fill: "none", stroke: "#f6a79f", "stroke-width": 170, "stroke-linecap": "round", "stroke-linejoin": "round" }));
-    for (const side of [-1, 1]) {
-      let at = 0;
-      SIZES.forEach(([w0, h0], i) => {
-        const w = w0 * k, h = h0 * k, span = w / PX_PER_DEG;
-        const th = side * (at + span / 2) * Math.PI / 180;
-        at += span;
-        const x = CX + a * Math.sin(th), y = cy + up * b * Math.cos(th);
-        const rot = Math.atan2(b * Math.sin(th), a * Math.cos(th)) * 180 / Math.PI * -up;
-        const gap = 5;
-        const r = mk("rect", { class: "tooth", x: -(w - gap) / 2, y: -(h - gap) / 2, width: w - gap, height: h - gap, rx: Math.min(w, h) * .32 });
-        const g = mk("g", { transform: `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(1)})` });
-        g.appendChild(r);
-        teethG.appendChild(g);
-        const key = i < 2 ? "F" : side > 0 ? (jaw === "U" ? "TR" : "BR") : (jaw === "U" ? "TL" : "BL");
-        groups[key].push(r);
-      });
-    }
-  }
+  for (const el of document.querySelectorAll("#teeth .tooth")) groups[el.dataset.k].push(el);
 
   const ICON = {
     play: '<path d="M7 4.5v15l13-7.5z"/>',
