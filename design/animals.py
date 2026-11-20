@@ -107,10 +107,10 @@ EARS = {
     "round": lambda c: (f'<circle cx="198" cy="306" r="46" fill="{c["earO"]}"/><circle cx="206" cy="311" r="28" fill="{c["earI"]}" stroke-width="4"/>'
                         f'<path d="M196 322 Q200 300 216 296" fill="none" stroke="{c["earLine"]}" stroke-width="4"/>'),
     "bear": lambda c: (f'<circle cx="206" cy="298" r="46" fill="{c["earO"]}"/><circle cx="212" cy="304" r="26" fill="{c["earI"]}" stroke-width="4"/>'),
-    "cat": lambda c: (f'<path d="M166 340 C158 292 174 246 200 216 C240 234 272 266 286 304 Z" fill="{c["earO"]}"/>'
-                      f'<path d="M190 326 C186 294 196 268 208 246 C232 260 252 280 260 306 Z" fill="{c["earI"]}" stroke-width="4"/>'),
-    "wolf": lambda c: (f'<path d="M170 344 C158 282 166 224 194 174 C236 204 272 250 286 306 Z" fill="{c["earO"]}"/>'
-                       f'<path d="M192 326 C186 278 192 238 204 208 C230 230 252 262 260 300 Z" fill="{c["earI"]}" stroke-width="4"/>'),
+    "cat": lambda c: (f'<path d="M184 386 C156 320 168 256 198 204 C242 224 278 262 294 308 Z" fill="{c["earO"]}"/>'
+                      f'<path d="M194 346 C184 306 192 270 208 236 C234 252 254 280 266 314 Z" fill="{c["earI"]}" stroke-width="4"/>'),
+    "wolf": lambda c: (f'<path d="M184 388 C150 318 158 240 190 160 C238 194 278 248 296 310 Z" fill="{c["earO"]}"/>'
+                       f'<path d="M196 348 C184 298 188 246 204 198 C234 222 258 264 270 308 Z" fill="{c["earI"]}" stroke-width="4"/>'),
     "floppy": lambda c: (f'<path d="M176 342 C142 298 172 252 226 258 C264 262 284 290 288 314 C252 308 228 324 224 352 C206 358 186 354 176 342 Z" fill="{c["earO"]}"/>'
                          f'<path d="M206 286 C230 284 252 292 262 306" fill="none" stroke="{c["earI"]}" stroke-width="7"/>'),
 }

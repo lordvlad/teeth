@@ -26,7 +26,7 @@
 </g>
 <g stroke="#4d5868" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
   <defs><linearGradient id="faceG_wolf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfc7d1"/><stop offset=".6" stop-color="#b0bac6"/><stop offset="1" stop-color="#a4afbc"/></linearGradient></defs>
-  <path d="M170 344 C158 282 166 224 194 174 C236 204 272 250 286 306 Z" fill="#7f8b9b"/><path d="M192 326 C186 278 192 238 204 208 C230 230 252 262 260 300 Z" fill="#4d5868" stroke-width="4"/><g transform="translate(770 0) scale(-1 1)"><path d="M170 344 C158 282 166 224 194 174 C236 204 272 250 286 306 Z" fill="#7f8b9b"/><path d="M192 326 C186 278 192 238 204 208 C230 230 252 262 260 300 Z" fill="#4d5868" stroke-width="4"/></g>
+  <path d="M184 388 C150 318 158 240 190 160 C238 194 278 248 296 310 Z" fill="#7f8b9b"/><path d="M196 348 C184 298 188 246 204 198 C234 222 258 264 270 308 Z" fill="#4d5868" stroke-width="4"/><g transform="translate(770 0) scale(-1 1)"><path d="M184 388 C150 318 158 240 190 160 C238 194 278 248 296 310 Z" fill="#7f8b9b"/><path d="M196 348 C184 298 188 246 204 198 C234 222 258 264 270 308 Z" fill="#4d5868" stroke-width="4"/></g>
   
   <ellipse cx="385" cy="475" rx="236" ry="224" fill="#8591a1"/>
   <ellipse cx="385" cy="462" rx="224" ry="208" fill="url(#faceG_wolf)" stroke="none"/>
