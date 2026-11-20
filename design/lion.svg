@@ -1,25 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 1024" width="768" height="1024">
 <defs>
-  <linearGradient id="maneG" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#fa8f27"/><stop offset="1" stop-color="#ef7a1c"/></linearGradient>
-  <linearGradient id="faceG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fcc94b"/><stop offset=".6" stop-color="#f9bd3a"/><stop offset="1" stop-color="#f6ae30"/></linearGradient>
-  <linearGradient id="bodyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbc03e"/><stop offset="1" stop-color="#f5ae2e"/></linearGradient>
   <radialGradient id="mouthG" cx="50%" cy="48%" r="60%"><stop offset="0" stop-color="#8e2a38"/><stop offset=".55" stop-color="#b3434e"/><stop offset="1" stop-color="#c4545c"/></radialGradient>
   <linearGradient id="tongueG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fb8d8d"/><stop offset="1" stop-color="#f4707a"/></linearGradient>
   <clipPath id="mouthClip"><path d="M205 478 C200 420 262 396 385 396 C508 396 570 420 565 478 C562 572 484 642 385 642 C286 642 208 572 205 478 Z"/></clipPath>
 </defs>
 <g stroke="#b8591a" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-  <!-- tail -->
+  <defs><linearGradient id="bodyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbc03e"/><stop offset="1" stop-color="#f5ae2e"/></linearGradient></defs>
   <path d="M562 842 C632 846 674 826 674 790" fill="none" stroke="#b8591a" stroke-width="30"/>
   <path d="M562 842 C632 846 674 826 674 790" fill="none" stroke="#f7b733" stroke-width="20"/>
   <g transform="translate(26 14)"><path d="M596 752 C584 716 618 700 636 712 C640 692 664 680 676 694 C670 716 700 726 694 762 C686 796 640 812 614 800 C598 790 596 768 596 752 Z" fill="#f58a24"/>
   <path d="M636 712 C630 736 638 752 662 762 M616 738 C620 756 636 770 656 774" fill="none" stroke="#c9631a" stroke-width="3.5"/></g>
-  <!-- body -->
   <path d="M300 740 C250 770 214 820 210 872 C206 922 244 952 296 952 L494 952 C546 952 584 922 576 872 C568 820 528 770 476 740 Z" fill="url(#bodyG)"/>
   <ellipse cx="258" cy="868" rx="52" ry="78" fill="#f9b936"/>
   <ellipse cx="520" cy="868" rx="52" ry="78" fill="#f9b936"/>
   <path d="M340 780 C336 850 336 900 340 940 L456 940 C460 900 458 850 452 780 Z" fill="#f8b935"/>
   <path d="M368 800 C366 850 366 900 368 936 M428 800 C430 850 430 900 428 936" fill="none" stroke-width="4"/>
-  <g transform="translate(0 14)">  <!-- paws -->
+  <g transform="translate(0 14)">
   <path d="M206 912 C200 884 240 872 272 884 C292 892 296 918 284 930 C262 944 220 940 206 912 Z" fill="#f9bb3d"/>
   <path d="M238 892 V918 M262 894 V922" fill="none" stroke-width="3.5"/>
   <path d="M492 884 C524 872 566 884 570 912 C558 940 516 944 494 930 C482 918 486 892 492 884 Z" fill="#f9bb3d"/>
@@ -29,17 +25,20 @@
   <path d="M416 912 C450 898 512 902 518 936 C510 952 468 958 430 950 C412 946 410 924 416 912 Z" fill="#f9bb3d"/>
   <path d="M446 914 V946 M472 914 V944" fill="none" stroke-width="3.5"/>
   </g>
-  <!-- mane -->
+</g>
+<g stroke="#b8591a" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+  <defs>
+    <linearGradient id="maneG" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#fa8f27"/><stop offset="1" stop-color="#ef7a1c"/></linearGradient>
+    <linearGradient id="faceG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fcc94b"/><stop offset=".6" stop-color="#f9bd3a"/><stop offset="1" stop-color="#f6ae30"/></linearGradient>
+  </defs>
   <path d="M457.8 129.2 A75.8 75.8 0 0 1 592.5 192.1 A74.9 74.9 0 0 1 685.7 305.6 A74.1 74.1 0 0 1 719.0 447.0 A74.1 74.1 0 0 1 685.7 588.4 A74.9 74.9 0 0 1 592.5 701.9 A75.8 75.8 0 0 1 457.8 764.8 A76.3 76.3 0 0 1 308.2 764.8 A75.8 75.8 0 0 1 173.5 701.9 A74.9 74.9 0 0 1 80.3 588.4 A74.1 74.1 0 0 1 47.0 447.0 A74.1 74.1 0 0 1 80.3 305.6 A74.9 74.9 0 0 1 173.5 192.1 A75.8 75.8 0 0 1 308.2 129.2 A76.3 76.3 0 0 1 457.8 129.2 Z" fill="url(#maneG)" stroke-width="6"/>
   <path d="M449.8 164.3 A67.8 67.8 0 0 1 570.0 220.7 A67.0 67.0 0 0 1 653.3 322.3 A66.4 66.4 0 0 1 683.0 449.0 A66.4 66.4 0 0 1 653.3 575.7 A67.0 67.0 0 0 1 570.0 677.3 A67.8 67.8 0 0 1 449.8 733.7 A68.1 68.1 0 0 1 316.2 733.7 A67.8 67.8 0 0 1 196.0 677.3 A67.0 67.0 0 0 1 112.7 575.7 A66.4 66.4 0 0 1 83.0 449.0 A66.4 66.4 0 0 1 112.7 322.3 A67.0 67.0 0 0 1 196.0 220.7 A67.8 67.8 0 0 1 316.2 164.3 A68.1 68.1 0 0 1 449.8 164.3 Z" fill="none" stroke="#f9a04a" stroke-width="5" opacity=".55"/>
-  <!-- ears -->
   <circle cx="198" cy="306" r="46" fill="#f9bd3a"/>
   <circle cx="206" cy="311" r="28" fill="#dc9a3d" stroke-width="4"/>
   <path d="M196 322 Q200 300 216 296" fill="none" stroke="#a95a1b" stroke-width="4"/>
   <circle cx="572" cy="306" r="46" fill="#f9bd3a"/>
   <circle cx="564" cy="311" r="28" fill="#dc9a3d" stroke-width="4"/>
   <path d="M574 322 Q570 300 554 296" fill="none" stroke="#a95a1b" stroke-width="4"/>
-  <!-- face -->
   <ellipse cx="385" cy="475" rx="236" ry="224" fill="#f2a82e"/>
   <ellipse cx="385" cy="462" rx="224" ry="208" fill="url(#faceG)" stroke="none"/>
   <path d="M345 252 C334 236 348 224 362 232 C360 218 376 206 388 213 C396 206 408 216 408 230 C411 238 406 248 400 256 Z" fill="#fbc44c"/>
@@ -52,7 +51,8 @@
   <ellipse cx="383" cy="345" rx="12" ry="5" fill="#c98a4c" stroke="none"/>
   <path d="M384 372 V384 M384 384 C372 398 338 396 318 378 M384 384 C396 398 432 396 452 378" fill="none" stroke="#a85f2b" stroke-width="4"/>
   <g fill="#a85f2b" stroke="none"><circle cx="318" cy="366" r="2.5"/><circle cx="332" cy="372" r="2.5"/><circle cx="346" cy="368" r="2.5"/><circle cx="420" cy="368" r="2.5"/><circle cx="436" cy="372" r="2.5"/><circle cx="450" cy="366" r="2.5"/></g>
-  <!-- mouth -->
+</g>
+<g stroke-linejoin="round" stroke-linecap="round">
   <path d="M205 478 C200 420 262 396 385 396 C508 396 570 420 565 478 C562 572 484 642 385 642 C286 642 208 572 205 478 Z" fill="url(#mouthG)" stroke="#8f3a24" stroke-width="7"/>
   <g clip-path="url(#mouthClip)" stroke="none">
     <ellipse cx="385" cy="492" rx="88" ry="76" fill="#822433"/>
@@ -65,7 +65,7 @@
     <path d="M205 400 H565 V420 C520 410 450 408 385 408 C320 408 250 410 205 420 Z" fill="#ee8e8e"/>
     <path d="M205 640 H565 V618 C520 626 450 630 385 630 C320 630 250 626 205 618 Z" fill="#ee8e8e"/>
   </g>
-<g fill="#fffdf6" stroke="#bfae92" stroke-width="2.5">
+<g id="teeth" fill="#fffdf6" stroke="#bfae92" stroke-width="2.5">
   <g transform="translate(285 451)"><path class="tooth" data-k="TL" d="M-27 -42 C-7 -49 13 -47 27 -41 C26 -8 14 22 -3 40 C-19 16 -27 -12 -27 -42 Z"/></g>
   <g transform="translate(485 451)"><path class="tooth" data-k="TR" d="M-27 -41 C-13 -47 7 -49 27 -42 C27 -12 19 16 3 40 C-13 20 -26 -8 -27 -41 Z"/></g>
   <g transform="translate(244 452) rotate(-20)"><rect class="tooth" data-k="TL" x="-17" y="-15" width="34" height="30" rx="11.4"/></g>
@@ -83,6 +83,6 @@
   <g transform="translate(403 621)"><path class="tooth" data-k="F" d="M-19 18 H19 V-6 C19 -16 10 -18 0 -18 C-10 -18 -19 -16 -19 -6 Z"/></g>
   <g transform="translate(441 616)"><path class="tooth" data-k="F" d="M-19 18 H19 V-6 C19 -16 10 -18 0 -18 C-10 -18 -19 -16 -19 -6 Z"/></g>
 </g>
-  <path d="M356 664 Q385 676 414 664" fill="none" stroke="#c0701c" stroke-width="4"/>
 </g>
+<g stroke-linejoin="round" stroke-linecap="round"><path d="M356 664 Q385 676 414 664" fill="none" stroke="#c0701c" stroke-width="4"/></g>
 </svg>
