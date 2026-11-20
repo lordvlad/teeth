@@ -7,7 +7,7 @@
         /* animals:begin */ ... /* animals:end */          ANIMALS = { id: { back, front } }: the per-animal head art that
                                                             goes behind / in front of the mouth
 
-All animals share the lion's layout (drawn in 768x1024 space): the head fills the timer disc, the mouth and its 16 teeth
+All animals share the lion's layout (drawn in 768x1024 space): the lion's mane fills the timer disc, the other animals are heads only; the mouth and its 16 teeth
 are identical, so the highlight logic doesn't care which animal is shown. Teeth carry data-k = TR | BR | BL | TL | F.
 """
 import json, math, os, sys
@@ -157,17 +157,14 @@ PAL = {
 }
 
 
-def head_generic(id_, c, ruff_path, ruff_inner, ears, nose, forehead="", extras_behind="", jowl="", whiskers=False, dots=False, patch=(385, 490, 190, 170)):
-    ruffG, faceG = f"ruffG_{id_}", f"faceG_{id_}"
+def head_generic(id_, c, ears, nose, forehead="", jowl="", whiskers=False, dots=False, patch=(385, 490, 190, 170)):
+    faceG = f"faceG_{id_}"
     px, py, prx, pry = patch
     patch_svg = f'<ellipse cx="{px}" cy="{py}" rx="{prx}" ry="{pry}" fill="{c["patch"]}" stroke="none" opacity=".95"/>' if c.get("patch") else ""
     dots_svg = (f'<g fill="{c["dot"]}" stroke="none"><circle cx="318" cy="366" r="2.5"/><circle cx="332" cy="372" r="2.5"/><circle cx="346" cy="368" r="2.5"/>'
                 '<circle cx="420" cy="368" r="2.5"/><circle cx="436" cy="372" r="2.5"/><circle cx="450" cy="366" r="2.5"/></g>') if dots else ""
     back = f'''<g stroke="{c["ol"]}" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-  <defs>{grad(ruffG, *c["ruff"])}{grad(faceG, *c["face"], v='x1="0" y1="0" x2="0" y2="1"')}</defs>
-  <path d="{ruff_path}" fill="url(#{ruffG})" stroke-width="6"/>
-  <path d="{ruff_inner}" fill="none" stroke="{c["ruffLine"]}" stroke-width="5" opacity=".55"/>
-  {extras_behind}
+  <defs>{grad(faceG, *c["face"], v='x1="0" y1="0" x2="0" y2="1"')}</defs>
   {ears}{mirror(ears)}
   {jowl}
   <ellipse cx="385" cy="475" rx="236" ry="224" fill="{c["rim"]}"/>
@@ -274,24 +271,13 @@ def lion():
     return body, back, front
 
 
-def stripes_on_ruff(color, n=16, r0=.80, r1=.99, w=11):
-    out = []
-    for i in range(n):
-        a = math.radians(-90 + (i + .5) * 360 / n)
-        out.append(f"M{CX + 336 * r0 * math.cos(a):.1f} {447 + 326 * r0 * math.sin(a):.1f} L{CX + 336 * r1 * math.cos(a):.1f} {447 + 326 * r1 * math.sin(a):.1f}")
-    return f'<path d="{" ".join(out)}" fill="none" stroke="{color}" stroke-width="{w}" stroke-linecap="round" opacity=".55"/>'
-
-
 def tiger():
     c = PAL["tiger"]
-    ruff = scallop(CX, 447, 336, 326, 16, off=-90 + 360 / 32, k=.56)
-    inner = scallop(CX, 449, 300, 292, 16, off=-90 + 360 / 32, k=.56)
     left_cheek = '<path d="M168 432 Q196 444 218 434 M170 486 Q198 494 216 484 M182 540 Q204 544 222 534" fill="none"/>'
     forehead = (f'<g stroke="{c["brow"]}" stroke-width="10" fill="none">'
                 '<path d="M385 246 V300 M350 256 Q352 282 364 300 M420 256 Q418 282 406 300 M314 274 Q320 292 332 304 M456 274 Q450 292 438 304"/>'
                 f'{left_cheek}{mirror(left_cheek)}</g>')
-    back, front = head_generic("tiger", c, ruff, inner, EARS["round"](c), NOSES["tri"](c), forehead=forehead,
-                               extras_behind=stripes_on_ruff(c["brow"]), dots=True, patch=(385, 500, 196, 160))
+    back, front = head_generic("tiger", c, EARS["round"](c), NOSES["tri"](c), forehead=forehead, dots=True, patch=(385, 500, 196, 160))
     tail = (f'<path d="M562 842 C636 850 684 822 676 760" fill="none" stroke="{c["ol"]}" stroke-width="30"/>'
             f'<path d="M562 842 C636 850 684 822 676 760" fill="none" stroke="#f7a63c" stroke-width="20"/>'
             f'<path d="M562 842 C636 850 684 822 676 760" fill="none" stroke="#5a2810" stroke-width="20" stroke-dasharray="9 24" stroke-dashoffset="-6" stroke-linecap="butt"/>'
@@ -302,11 +288,9 @@ def tiger():
 
 def kitten():
     c = PAL["kitten"]
-    ruff = scallop(CX, 447, 336, 326, 20, off=-90 + 360 / 40, k=.60)
-    inner = scallop(CX, 449, 300, 292, 20, off=-90 + 360 / 40, k=.60)
     cheeks = '<path d="M190 418 Q214 424 230 416 M186 462 Q212 468 228 460" fill="none"/>'
     forehead = (f'<g stroke="{c["brow"]}" stroke-width="9" fill="none"><path d="M385 252 V298 M350 262 Q354 282 364 298 M420 262 Q416 282 406 298"/>{cheeks}{mirror(cheeks)}</g>')
-    back, front = head_generic("kitten", c, ruff, inner, EARS["cat"](c), NOSES["kitten"](c), forehead=forehead, whiskers=True, patch=(385, 500, 168, 140))
+    back, front = head_generic("kitten", c, EARS["cat"](c), NOSES["kitten"](c), forehead=forehead, whiskers=True, patch=(385, 500, 168, 140))
     tail = (f'<path d="M562 846 C650 856 706 812 684 738" fill="none" stroke="{c["ol"]}" stroke-width="30"/>'
             f'<path d="M562 846 C650 856 706 812 684 738" fill="none" stroke="{c["body"][0]}" stroke-width="20"/>'
             f'<path d="M562 846 C650 856 706 812 684 738" fill="none" stroke="#e4a468" stroke-width="20" stroke-dasharray="9 26" stroke-dashoffset="-8" stroke-linecap="butt"/>')
@@ -316,11 +300,9 @@ def kitten():
 
 def bulldog():
     c = PAL["bulldog"]
-    ruff = scallop(CX, 447, 336, 326, 10, off=-90 + 360 / 20, k=.95)
-    inner = scallop(CX, 449, 300, 292, 10, off=-90 + 360 / 20, k=.95)
     wrinkles = f'<path d="M322 266 Q385 244 448 266 M334 290 Q385 272 436 290" fill="none" stroke="{c["brow"]}" stroke-width="7"/>'
     jowl = ('<ellipse cx="226" cy="540" rx="52" ry="74" fill="#ecbd84"/><ellipse cx="544" cy="540" rx="52" ry="74" fill="#ecbd84"/>')
-    back, front = head_generic("bulldog", c, ruff, inner, EARS["floppy"](c), NOSES["wide"](c), forehead=wrinkles, jowl=jowl, dots=True, patch=(385, 490, 200, 175))
+    back, front = head_generic("bulldog", c, EARS["floppy"](c), NOSES["wide"](c), forehead=wrinkles, jowl=jowl, dots=True, patch=(385, 490, 200, 175))
     tail = f'<ellipse cx="572" cy="842" rx="26" ry="20" fill="{c["body"][1]}" stroke="{c["ol"]}" stroke-width="5"/>'
     marks = f'<path d="M286 780 C300 760 330 752 350 760" fill="none" stroke="{c["brow"]}" stroke-width="7" opacity=".6"/>'
     return body_generic("bulldog", c, tail, marks), back, front
@@ -328,11 +310,9 @@ def bulldog():
 
 def wolf():
     c = PAL["wolf"]
-    ruff = spiky(CX, 447, 340, 330, 20, valley=.84)
-    inner = spiky(CX, 449, 304, 296, 20, valley=.84)
     tuft = f'<path d="M346 266 L366 222 L378 254 L394 214 L410 256 L428 224 L432 268 Z" fill="{c["face"][1]}" stroke="{c["ol"]}" stroke-width="4"/>'
     sidefur = f'<path d="M168 456 L196 468 L170 486 L200 500 L176 520" fill="none" stroke="{c["ruffLine"]}" stroke-width="6"/>'
-    back, front = head_generic("wolf", c, ruff, inner, EARS["wolf"](c), NOSES["wide"](c), forehead=tuft + sidefur + mirror(sidefur), dots=True, patch=(385, 505, 200, 150))
+    back, front = head_generic("wolf", c, EARS["wolf"](c), NOSES["wide"](c), forehead=tuft + sidefur + mirror(sidefur), dots=True, patch=(385, 505, 200, 150))
     tail = (f'<path d="M562 856 C650 892 736 840 706 736 C676 780 628 804 562 810 Z" fill="{c["body"][1]}" stroke="{c["ol"]}" stroke-width="5"/>'
             f'<path d="M706 736 C688 772 662 792 636 800 C670 810 700 780 706 736 Z" fill="#eef1f5" stroke="{c["ol"]}" stroke-width="4"/>')
     marks = f'<path d="M232 800 Q262 806 286 794 M538 794 Q562 806 594 800" fill="none" stroke="{c["ruffLine"]}" stroke-width="8" opacity=".8"/>'
@@ -341,9 +321,7 @@ def wolf():
 
 def bear():
     c = PAL["bear"]
-    ruff = scallop(CX, 447, 336, 326, 22, off=-90 + 360 / 44, k=.57)
-    inner = scallop(CX, 449, 300, 292, 22, off=-90 + 360 / 44, k=.57)
-    back, front = head_generic("bear", c, ruff, inner, EARS["bear"](c), NOSES["oval"](c), dots=False, patch=(385, 508, 192, 152))
+    back, front = head_generic("bear", c, EARS["bear"](c), NOSES["oval"](c), dots=False, patch=(385, 508, 192, 152))
     tail = f'<circle cx="570" cy="842" r="26" fill="{c["body"][1]}" stroke="{c["ol"]}" stroke-width="5"/>'
     marks = f'<ellipse cx="396" cy="840" rx="48" ry="56" fill="{c["patch"]}" stroke="none" opacity=".75"/>'
     return body_generic("bear", c, tail, marks), back, front

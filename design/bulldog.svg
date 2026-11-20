@@ -25,10 +25,7 @@
   </g>
 </g>
 <g stroke="#6e4222" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-  <defs><linearGradient id="ruffG_bulldog" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#ecc189"/><stop offset="1" stop-color="#e0aa6c"/></linearGradient><linearGradient id="faceG_bulldog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6d3a2"/><stop offset=".6" stop-color="#f0c791"/><stop offset="1" stop-color="#eabb82"/></linearGradient></defs>
-  <path d="M486.8 137.0 A195.3 195.3 0 0 1 654.8 255.4 A192.0 192.0 0 0 1 719.0 447.0 A192.0 192.0 0 0 1 654.8 638.6 A195.3 195.3 0 0 1 486.8 757.0 A197.3 197.3 0 0 1 279.2 757.0 A195.3 195.3 0 0 1 111.2 638.6 A192.0 192.0 0 0 1 47.0 447.0 A192.0 192.0 0 0 1 111.2 255.4 A195.3 195.3 0 0 1 279.2 137.0 A197.3 197.3 0 0 1 486.8 137.0 Z" fill="url(#ruffG_bulldog)" stroke-width="6"/>
-  <path d="M475.7 171.3 A174.5 174.5 0 0 1 625.7 277.4 A171.9 171.9 0 0 1 683.0 449.0 A171.9 171.9 0 0 1 625.7 620.6 A174.5 174.5 0 0 1 475.7 726.7 A176.1 176.1 0 0 1 290.3 726.7 A174.5 174.5 0 0 1 140.3 620.6 A171.9 171.9 0 0 1 83.0 449.0 A171.9 171.9 0 0 1 140.3 277.4 A174.5 174.5 0 0 1 290.3 171.3 A176.1 176.1 0 0 1 475.7 171.3 Z" fill="none" stroke="#f4d2a6" stroke-width="5" opacity=".55"/>
-  
+  <defs><linearGradient id="faceG_bulldog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6d3a2"/><stop offset=".6" stop-color="#f0c791"/><stop offset="1" stop-color="#eabb82"/></linearGradient></defs>
   <path d="M176 342 C142 298 172 252 226 258 C264 262 284 290 288 314 C252 308 228 324 224 352 C206 358 186 354 176 342 Z" fill="#7a4a2a"/><path d="M206 286 C230 284 252 292 262 306" fill="none" stroke="#b27a4c" stroke-width="7"/><g transform="translate(770 0) scale(-1 1)"><path d="M176 342 C142 298 172 252 226 258 C264 262 284 290 288 314 C252 308 228 324 224 352 C206 358 186 354 176 342 Z" fill="#7a4a2a"/><path d="M206 286 C230 284 252 292 262 306" fill="none" stroke="#b27a4c" stroke-width="7"/></g>
   <ellipse cx="226" cy="540" rx="52" ry="74" fill="#ecbd84"/><ellipse cx="544" cy="540" rx="52" ry="74" fill="#ecbd84"/>
   <ellipse cx="385" cy="475" rx="236" ry="224" fill="#e0aa6c"/>

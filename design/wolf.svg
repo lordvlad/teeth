@@ -25,10 +25,7 @@
   </g>
 </g>
 <g stroke="#4d5868" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-  <defs><linearGradient id="ruffG_wolf" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#8d98a7"/><stop offset="1" stop-color="#79879a"/></linearGradient><linearGradient id="faceG_wolf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfc7d1"/><stop offset=".6" stop-color="#b0bac6"/><stop offset="1" stop-color="#a4afbc"/></linearGradient></defs>
-  <path d="M383.0 117.0 L427.7 173.2 L488.1 133.2 L512.7 200.0 L582.8 180.0 L584.9 251.0 L658.1 253.0 L637.5 321.2 L706.4 345.0 L665.1 403.6 L723.0 447.0 L665.1 490.4 L706.4 549.0 L637.5 572.8 L658.1 641.0 L584.9 643.0 L582.8 714.0 L512.7 694.0 L488.1 760.8 L427.7 720.8 L383.0 777.0 L338.3 720.8 L277.9 760.8 L253.3 694.0 L183.2 714.0 L181.1 643.0 L107.9 641.0 L128.5 572.8 L59.6 549.0 L100.9 490.4 L43.0 447.0 L100.9 403.6 L59.6 345.0 L128.5 321.2 L107.9 253.0 L181.1 251.0 L183.2 180.0 L253.3 200.0 L277.9 133.2 L338.3 173.2 Z" fill="url(#ruffG_wolf)" stroke-width="6"/>
-  <path d="M383.0 153.0 L422.9 203.4 L476.9 167.5 L498.9 227.5 L561.7 209.5 L563.6 273.2 L628.9 275.0 L610.5 336.1 L672.1 357.5 L635.2 410.1 L687.0 449.0 L635.2 487.9 L672.1 540.5 L610.5 561.9 L628.9 623.0 L563.6 624.8 L561.7 688.5 L498.9 670.5 L476.9 730.5 L422.9 694.6 L383.0 745.0 L343.1 694.6 L289.1 730.5 L267.1 670.5 L204.3 688.5 L202.4 624.8 L137.1 623.0 L155.5 561.9 L93.9 540.5 L130.8 487.9 L79.0 449.0 L130.8 410.1 L93.9 357.5 L155.5 336.1 L137.1 275.0 L202.4 273.2 L204.3 209.5 L267.1 227.5 L289.1 167.5 L343.1 203.4 Z" fill="none" stroke="#a9b3c0" stroke-width="5" opacity=".55"/>
-  
+  <defs><linearGradient id="faceG_wolf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfc7d1"/><stop offset=".6" stop-color="#b0bac6"/><stop offset="1" stop-color="#a4afbc"/></linearGradient></defs>
   <path d="M170 344 C158 282 166 224 194 174 C236 204 272 250 286 306 Z" fill="#7f8b9b"/><path d="M192 326 C186 278 192 238 204 208 C230 230 252 262 260 300 Z" fill="#4d5868" stroke-width="4"/><g transform="translate(770 0) scale(-1 1)"><path d="M170 344 C158 282 166 224 194 174 C236 204 272 250 286 306 Z" fill="#7f8b9b"/><path d="M192 326 C186 278 192 238 204 208 C230 230 252 262 260 300 Z" fill="#4d5868" stroke-width="4"/></g>
   
   <ellipse cx="385" cy="475" rx="236" ry="224" fill="#8591a1"/>
