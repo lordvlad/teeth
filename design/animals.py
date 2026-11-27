@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generates the animal artwork: the original lion plus tiger cub, kitten, bulldog pup, wolf pup and bear cub.
+"""Generates the animal artwork: the original lion plus tiger cub, cheetah, kitten, bulldog pup, wolf pup, bear cub, black bear and sloth.
 
   python3 design/animals.py          -> design/<id>.svg (full animal, 768x1024, standalone) for every animal
   python3 design/animals.py --apply  -> also rewrites two generated regions in public/index.html:
@@ -150,6 +150,18 @@ PAL = {
               rim="#8591a1", face=("#bfc7d1", "#b0bac6", "#a4afbc"), patch="#f1f4f7", brow="#6a7686", eye="#2f3846", cheek="#e7a4a8",
               nose="#2b3340", noseLine="#161b24", noseHi="#6a7686", line="#4d5868", dot="#4d5868", chin="#3a4452",
               body=("#b5bec9", "#a4afbc"), haunch="#adb7c3", paw="#e9edf2"),
+    "cheetah": P(ol="#7a4a14", earO="#f1c067", earI="#4f3d2e", earLine="#7a4a14",
+                 rim="#e6b04a", face=("#f9d98c", "#f5cd78", "#efc064"), patch="#fff3d6", brow="#a8741c", eye="#3b2610", cheek="#f09a78",
+                 nose="#4a3226", noseLine="#241408", noseHi="#8a6a52", line="#6a3f10", dot="#3b2610", chin="#a8741c",
+                 body=("#f7d283", "#efc062"), haunch="#f4c96f", paw="#fbe2a0"),
+    "blackbear": P(ol="#1b161b", earO="#3c353a", earI="#9a7a5e", earLine="#1b161b",
+                   rim="#302a2f", face=("#4c454a", "#443d42", "#3b353a"), patch="#d6b588", brow="#d0a874", eye="#f2e3c9", cheek="#d98c8c",
+                   nose="#17111a", noseLine="#08050a", noseHi="#5e535b", line="#1b161b", dot="#1b161b", chin="#a8947e",
+                   body=("#4a4348", "#3c363b"), haunch="#443d42", paw="#5b535a"),
+    "sloth": P(ol="#5a4128", earO="#cdb894", earI="#9a7c58", earLine="#5a4128",
+               rim="#bda47d", face=("#dccaa8", "#d2bf9c", "#c9b490"), patch="#f1e5cc", brow="#8c7458", eye="#fbefd4", cheek="#e8a99c",
+               nose="#3a2a1e", noseLine="#1d130b", noseHi="#7d6b58", line="#5a4128", dot="#5a4128", chin="#6a4e30",
+               body=("#d3be99", "#c0a67d"), haunch="#cdb690", paw="#b39a74"),
     "bear": P(ol="#6b3a1a", ruff=("#b87440", "#a5622e"), ruffLine="#cf8e5a", earO="#b87440", earI="#e9b98a", earLine="#6b3a1a",
               rim="#a5622e", face=("#d89c64", "#cf9057", "#c78649"), patch="#f0d0a8", brow="#8a5028", eye="#3a2214", cheek="#e8957a",
               nose="#3a2214", noseLine="#1f1209", noseHi="#7a5a46", line="#6b3a1a", dot="#6b3a1a", chin="#7a4420",
@@ -190,7 +202,7 @@ def head_generic(id_, c, ears, nose, forehead="", jowl="", whiskers=False, dots=
     return back, front
 
 
-def body_generic(id_, c, tail, markings=""):
+def body_generic(id_, c, tail, markings="", over=""):
     bodyG = f"bodyG_{id_}"
     return f'''<g stroke="{c["ol"]}" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
   <defs>{grad(bodyG, *c["body"], v='x1="0" y1="0" x2="0" y2="1"')}</defs>
@@ -201,6 +213,7 @@ def body_generic(id_, c, tail, markings=""):
   {markings}
   <path d="M340 780 C336 850 336 900 340 940 L456 940 C460 900 458 850 452 780 Z" fill="{c["haunch"]}"/>
   <path d="M368 800 C366 850 366 900 368 936 M428 800 C430 850 430 900 428 936" fill="none" stroke-width="4"/>
+  {over}
   <g transform="translate(0 14)">
   <path d="M206 912 C200 884 240 872 272 884 C292 892 296 918 284 930 C262 944 220 940 206 912 Z" fill="{c["paw"]}"/>
   <path d="M238 892 V918 M262 894 V922" fill="none" stroke-width="3.5"/>
@@ -327,8 +340,54 @@ def bear():
     return body_generic("bear", c, tail, marks), back, front
 
 
-ORDER = ["lion", "tiger", "kitten", "bulldog", "wolf", "bear"]
-BUILDERS = {"lion": lion, "tiger": tiger, "kitten": kitten, "bulldog": bulldog, "wolf": wolf, "bear": bear}
+def cheetah():
+    c = PAL["cheetah"]
+    spots_l = [(246, 396, 7), (222, 440, 8), (258, 462, 6), (232, 500, 7), (276, 420, 6), (214, 372, 6), (298, 276, 7), (330, 266, 6), (262, 300, 5)]
+    left = "".join(f'<circle cx="{x}" cy="{y}" r="{r}"/>' for x, y, r in spots_l)
+    forehead_spots = "".join(f'<circle cx="{x}" cy="{y}" r="{r}"/>' for x, y, r in [(385, 288, 6), (362, 274, 5), (408, 274, 5), (385, 262, 5)])
+    tear = '<path d="M308 338 C300 362 302 386 318 404" fill="none" stroke-width="10"/>'
+    forehead = f'<g fill="{c["dot"]}" stroke="none">{left}{mirror(left)}{forehead_spots}</g><g stroke="{c["dot"]}" stroke-linecap="round">{tear}{mirror(tear)}</g>'
+    back, front = head_generic("cheetah", c, EARS["round"](c), NOSES["kitten"](c), forehead=forehead, whiskers=True, patch=(385, 505, 176, 146))
+    spot = lambda pts, r: "".join(f'<circle cx="{x}" cy="{y}" r="{r}"/>' for x, y in pts)
+    marks = (f'<g fill="{c["dot"]}" stroke="none">'
+             + spot([(240, 826), (270, 852), (244, 884), (282, 818), (226, 856), (276, 890)], 7)
+             + spot([(536, 826), (506, 852), (532, 884), (494, 818), (550, 856), (500, 890)], 7)
+             + spot([(300, 760), (462, 760), (350, 790), (418, 790)], 6) + '</g>')
+    path = "M562 842 C650 850 708 820 690 744"
+    tail = (f'<path d="{path}" fill="none" stroke="{c["ol"]}" stroke-width="30"/>'
+            f'<path d="{path}" fill="none" stroke="{c["body"][0]}" stroke-width="20"/>'
+            f'<path d="{path}" fill="none" stroke="{c["dot"]}" stroke-width="11" stroke-dasharray="0.1 24" stroke-dashoffset="-8" stroke-linecap="round"/>'
+            f'<circle cx="690" cy="744" r="14" fill="{c["dot"]}" stroke="none"/>')
+    return body_generic("cheetah", c, tail, marks), back, front
+
+
+def blackbear():
+    c = PAL["blackbear"]
+    brow_dots = (f'<g fill="{c["brow"]}" stroke="none"><ellipse cx="296" cy="300" rx="14" ry="8"/><ellipse cx="474" cy="300" rx="14" ry="8"/></g>')
+    back, front = head_generic("blackbear", c, EARS["bear"](c), NOSES["oval"](c), forehead=brow_dots, patch=(385, 476, 164, 128))
+    tail = f'<circle cx="570" cy="842" r="24" fill="{c["body"][1]}" stroke="{c["ol"]}" stroke-width="5"/>'
+    over = f'<path d="M346 752 C350 790 378 806 396 826 C414 806 442 790 448 752 Z" fill="{c["patch"]}" stroke="none" opacity=".92"/>'
+    return body_generic("blackbear", c, tail, over=over), back, front
+
+
+def sloth():
+    c = PAL["sloth"]
+    mask = f'<ellipse cx="284" cy="338" rx="56" ry="30" transform="rotate(26 284 338)" fill="#6a4f33" stroke="none"/>'
+    fur = (f'<path d="M168 470 L196 482 L172 500 L200 514 L178 534 M200 548 L226 558" fill="none" stroke="{c["rim"]}" stroke-width="6" opacity=".9"/>')
+    forehead = f'{mask}{mirror(mask)}<g>{fur}{mirror(fur)}</g>'
+    ears = f'<circle cx="212" cy="318" r="26" fill="{c["earO"]}"/><circle cx="214" cy="321" r="14" fill="{c["earI"]}" stroke-width="3.5"/>'
+    back, front = head_generic("sloth", c, ears, NOSES["oval"](c), forehead=forehead, patch=(385, 510, 190, 142))
+    claws = ""
+    for x, y, d in [(232, 944, -1), (252, 950, 0), (272, 944, 1), (500, 944, -1), (524, 950, 0), (544, 944, 1), (300, 958, -1), (330, 962, 0), (360, 958, 1), (428, 958, -1), (458, 962, 0), (488, 958, 1)]:
+        path = f"M{x} {y} q{d * 5} 22 {d * 10 + 2} 38"
+        claws += f'<path d="{path}" fill="none" stroke="{c["ol"]}" stroke-width="13" stroke-linecap="round"/><path d="{path}" fill="none" stroke="#fff3da" stroke-width="7" stroke-linecap="round"/>'
+    tail = f'<ellipse cx="572" cy="846" rx="26" ry="18" fill="{c["body"][1]}" stroke="{c["ol"]}" stroke-width="5"/>'
+    fuzz = f'<path d="M262 790 L276 804 M236 826 L252 838 M512 790 L498 804 M538 826 L522 838" fill="none" stroke="{c["rim"]}" stroke-width="6" opacity=".8"/>'
+    return body_generic("sloth", c, tail, fuzz + claws), back, front
+
+
+ORDER = ["lion", "tiger", "cheetah", "kitten", "bulldog", "wolf", "bear", "blackbear", "sloth"]
+BUILDERS = {"lion": lion, "tiger": tiger, "cheetah": cheetah, "kitten": kitten, "bulldog": bulldog, "wolf": wolf, "bear": bear, "blackbear": blackbear, "sloth": sloth}
 
 
 def full_svg(body, back, front):
